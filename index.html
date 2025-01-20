@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arroz con Leche</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="arroz-header">
+    <h1>Arroz con Leche</h1>
+  </header>
+
+  <section class="arroz-banner">
+    <img src="assets/img/istockphoto-119394438-612x612.jpg" alt="Arroz con Leche" />
+  </section>
+
+  <main>
+    <section class="arroz-details">
+
+      <div class="arroz-ingredients">
+        <h2>Ingredientes</h2>
+        <ul>
+          <li><input type="checkbox" id="ingredient1"> <label for="ingredient1">1 taza de arroz</label></li>
+          <li><input type="checkbox" id="ingredient2"> <label for="ingredient2">4 tazas de leche</label></li>
+          <li><input type="checkbox" id="ingredient3"> <label for="ingredient3">1 taza de azúcar</label></li>
+          <li><input type="checkbox" id="ingredient4"> <label for="ingredient4">1 rama de canela</label></li>
+          <li><input type="checkbox" id="ingredient5"> <label for="ingredient5">Cáscara de limón (opcional)</label></li>
+          <li><input type="checkbox" id="ingredient6"> <label for="ingredient6">Canela en polvo para decorar</label></li>
+        </ul>
+      </div>
+
+      <div class="arroz-time">
+        <h2>Tiempo de cocinado</h2>
+        <p>40 minutos</p>
+        <section class="arroz-timer">
+            <h2>Minutero</h2>
+            <div class="timer-controls">
+              <label for="time-input">Minutos:</label>
+              <input type="number" id="time-input" min="0" placeholder="Ingresa los minutos">
+              <p id="timer-display">0:00</p>
+              <button id="start-timer">Iniciar</button>
+              <button id="pause-timer">Pausar</button>
+              <button id="reset-timer">Reiniciar</button>
+            </div>
+          </section>
+          
+      </div>
+    </section>
+
+    <section class="arroz-preparation">
+      <h2>Receta</h2>
+      <ul>
+        <li>Lava el arroz con agua fría y escúrrelo bien.</li>
+        <li>En una olla grande, calienta la leche con la rama de canela y la cáscara de limón a fuego medio.</li>
+        <li>Cuando la leche comience a hervir, agrega el arroz y cocina a fuego lento, revolviendo ocasionalmente.</li>
+        <li>Después de 20-25 minutos, agrega el azúcar y mezcla bien.</li>
+        <li>Cocina por 10 minutos más, revolviendo para evitar que se pegue.</li>
+        <li>Retira del fuego y deja enfriar. Retira la canela y la cáscara de limón.</li>
+        <li>Sirve frío o caliente, decorado con canela en polvo.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="arroz-footer">
+    <div class="arroz-social-icons">
+    <p>Jesus Enjamio &#169</p>
+      <a href="#" target="_blank"><img src="assets/img/fb.png" alt="Facebook"></a>
+      <a href="#" target="_blank"><img src="assets/img/IG.jpg" alt="Instagram"></a>
+    </div>
+  </footer>
+
+  <script>
+   document.addEventListener("DOMContentLoaded", () => {
+  const timeInput = document.getElementById("time-input");
+  const startButton = document.getElementById("start-timer");
+  const pauseButton = document.getElementById("pause-timer");
+  const resetButton = document.getElementById("reset-timer");
+  const display = document.getElementById("timer-display");
+
+  let countdown;
+  let remainingTime = 0;
+
+  const formatTime = (seconds) => {
+    const min = Math.floor(seconds / 60);
+    const sec = seconds % 60;
+    return `${min}:${sec < 10 ? "0" : ""}${sec}`;
+  };
+
+  const startTimer = () => {
+    if (!countdown && remainingTime > 0) {
+      countdown = setInterval(() => {
+        if (remainingTime > 0) {
+          remainingTime--;
+          display.textContent = formatTime(remainingTime);
+        } else {
+          clearInterval(countdown);
+          countdown = null;
+          alert("¡Tiempo terminado!");
+        }
+      }, 1000);
+    }
+  };
+
+  const pauseTimer = () => {
+    clearInterval(countdown);
+    countdown = null;
+  };
+
+  const resetTimer = () => {
+    clearInterval(countdown);
+    countdown = null;
+    remainingTime = 0;
+    display.textContent = "0:00";
+    timeInput.value = "";
+  };
+
+  startButton.addEventListener("click", () => {
+    if (timeInput.value && !countdown) {
+      remainingTime = parseInt(timeInput.value, 10) * 60;
+      display.textContent = formatTime(remainingTime);
+      startTimer();
+    }
+  });
+
+  pauseButton.addEventListener("click", pauseTimer);
+  resetButton.addEventListener("click", resetTimer);
+});
+
+  </script>
+</body>
+</html>
